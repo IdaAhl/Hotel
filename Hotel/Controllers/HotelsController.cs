@@ -26,6 +26,11 @@ namespace Hotel.Controllers
         [HttpPost]
         public IActionResult PostArea(Area area)
         {
+
+            if (!new Validate().ValidateArea(area))
+                return BadRequest("Något saknas");
+
+
             _hotelsRepository.Add(area);
             return Ok("Har lagt till");
         }
