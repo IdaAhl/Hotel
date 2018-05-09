@@ -44,7 +44,11 @@ namespace Hotel.Controllers
             return Ok($"Har tagit bort");
         }
 
-
-
+        [HttpPut]
+        public IActionResult UpdateArea(Area area)
+        {
+            _hotelsRepository.UpdateArea(area);
+            return Ok("Har uppdaterat");
+        }
     }
 }

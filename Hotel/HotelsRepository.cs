@@ -37,5 +37,11 @@ namespace Hotel
             context.Area.Remove(area);
             context.SaveChanges();
         }
+
+        public void UpdateArea(Area area)
+        {
+            context.Area.Update(area);
+            context.SaveChanges();
+        }
     }
 }

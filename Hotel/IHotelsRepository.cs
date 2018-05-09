@@ -11,5 +11,6 @@ namespace Hotel
         void Add(Area area);
         List<Area> GetAreas();
         void DeleteArea(Area area);
+        void UpdateArea(Area area);
     }
 }
