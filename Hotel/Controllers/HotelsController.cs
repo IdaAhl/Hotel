@@ -42,13 +42,20 @@ namespace Hotel.Controllers
             return Ok(list);
         }
 
-        [HttpDelete]
-        public IActionResult DeleteArea(Area area)
+        [HttpGet, Route("{id:int}")]
+        public IActionResult GetAreaById(int id)
         {
-            if (!new Validate().ValidateAreaId(area))
+            // Hämta en area med en viss id
+            return Ok("Hej" + id);
+        }
+
+        [HttpDelete, Route("{id:int}")]
+        public IActionResult DeleteArea(int id)
+        {
+            if (!new Validate().ValidateAreaId(id))
                 return BadRequest("Området finns inte, så därför kan du inte ta bort det.");
 
-            _hotelsRepository.DeleteArea(area);
+            _hotelsRepository.DeleteArea(id);
             return Ok($"Har tagit bort");
         }
 

@@ -32,8 +32,9 @@ namespace Hotel
             return listAreas;
         }
 
-        public void DeleteArea(Area area)
+        public void DeleteArea(int id)
         {
+            var area = context.Area.First(n => n.Id == id);
             context.Area.Remove(area);
             context.SaveChanges();
         }

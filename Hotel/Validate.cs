@@ -18,10 +18,10 @@ namespace Hotel
                 return true;
         }
 
-        public bool ValidateAreaId(Area area)
+        public bool ValidateAreaId(int id)
         {
             var list = new HotelsRepository().GetAreas();
-            if (list.Any(x => x.Id == area.Id))
+            if (list.Any(x => x.Id == id))
                 return true;
             else
             {

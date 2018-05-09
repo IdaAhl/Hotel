@@ -10,7 +10,7 @@ namespace Hotel
         void Seed();
         void Add(Area area);
         List<Area> GetAreas();
-        void DeleteArea(Area area);
+        void DeleteArea(int id);
         void UpdateArea(Area area);
     }
 }
