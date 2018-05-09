@@ -17,5 +17,16 @@ namespace Hotel
             else
                 return true;
         }
+
+        public bool ValidateAreaId(Area area)
+        {
+            var list = new HotelsRepository().GetAreas();
+            if (list.Any(x => x.Id == area.Id))
+                return true;
+            else
+            {
+                return false;
+            }
+        }
     }
 }

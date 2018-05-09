@@ -45,6 +45,9 @@ namespace Hotel.Controllers
         [HttpDelete]
         public IActionResult DeleteArea(Area area)
         {
+            if (!new Validate().ValidateAreaId(area))
+                return BadRequest("Området finns inte, så därför kan du inte ta bort det.");
+
             _hotelsRepository.DeleteArea(area);
             return Ok($"Har tagit bort");
         }
