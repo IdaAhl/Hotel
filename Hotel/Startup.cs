@@ -23,7 +23,10 @@ namespace Hotel
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddEntityFrameworkSqlite().AddDbContext<DatabaseContext>();
+            services.AddSingleton<IHotelsRepository, HotelsRepository>();
             services.AddMvc();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,7 +36,8 @@ namespace Hotel
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseStaticFiles();
+            app.UseDirectoryBrowser();
             app.UseMvc();
         }
     }
