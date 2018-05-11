@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,6 +43,25 @@ namespace Hotel
         public void UpdateArea(Area area)
         {
             context.Area.Update(area);
+            context.SaveChanges();
+        }
+
+        public void ImportScandicFile()
+        {
+            var listOfHotels = new List<Hotel>();
+            var text = File.ReadAllLines("Scandic-2018-03-20.txt").ToList();
+            foreach (var t in text)
+            {
+                var temp = t.Split(',');
+
+                listOfHotels.Add(new Hotel()
+                {
+                    AreaId = Convert.ToInt32(temp[0]),
+                    Name = temp[1],
+                    FreeRooms = Convert.ToInt32(temp[2])
+                });
+            }
+            context.Hotel.AddRange(listOfHotels);
             context.SaveChanges();
         }
     }

@@ -65,5 +65,12 @@ namespace Hotel.Controllers
             _hotelsRepository.UpdateArea(area);
             return Ok("Har uppdaterat");
         }
+
+        [HttpPost, Route("ImportScandicFile")]
+        public IActionResult ImportScandicFile()
+        {
+            _hotelsRepository.ImportScandicFile();
+            return Ok("Filen är inläst");
+        }
     }
 }

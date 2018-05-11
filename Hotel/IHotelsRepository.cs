@@ -12,5 +12,6 @@ namespace Hotel
         List<Area> GetAreas();
         void DeleteArea(int id);
         void UpdateArea(Area area);
+        void ImportScandicFile();
     }
 }

@@ -10,6 +10,7 @@ namespace Hotel
     {
 
         public DbSet<Area> Area { get; set; }
+        public DbSet<Hotel> Hotel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
