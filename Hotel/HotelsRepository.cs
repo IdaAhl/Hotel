@@ -50,7 +50,7 @@ namespace Hotel
         public void ImportScandicFile()
         {
             var listOfHotels = new List<Hotel>();
-            var text = File.ReadAllLines("wwwroot/Scandic-2018-03-20.txt").ToList();
+            var text = File.ReadAllLines(GetLastScandicFile()).ToList();
             foreach (var t in text)
             {
                 var temp = t.Split(',');
@@ -75,6 +75,28 @@ namespace Hotel
             }
             context.Hotel.AddRange(listOfHotels);
             context.SaveChanges();
+        }
+
+        public string GetLastScandicFile()
+        {
+            var files = Directory.GetFiles("wwwroot");
+
+            
+
+            DateTime latestFile = DateTime.MinValue;
+
+            foreach (var file in files)
+            {
+                string tempFile = file.Replace(".txt", "");
+                var tempFile2 = tempFile.Replace(@"wwwroot\Scandic-", "");
+
+                var tempDate = DateTime.Parse(tempFile2);
+
+                if (tempDate > latestFile)
+                    latestFile = tempDate;
+            }
+
+            return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
         }
     }
 }
