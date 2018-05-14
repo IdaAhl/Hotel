@@ -39,6 +39,7 @@ namespace Hotel.Controllers
         public IActionResult GetAreas()
         {
             var list = _hotelsRepository.GetAreas();
+
             return Ok(list);
         }
 

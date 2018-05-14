@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotel
 {
@@ -29,7 +30,7 @@ namespace Hotel
 
         public List<Area> GetAreas()
         {
-            var listAreas = context.Area.ToList();
+            var listAreas = context.Area.Include(x => x.Hotels).ToList();
             return listAreas;
         }
 
@@ -56,6 +57,7 @@ namespace Hotel
 
                 listOfHotels.Add(new Hotel()
                 {
+                    //Area = context.Area.First(x => x.Id == Convert.ToInt32(temp[0])),
                     AreaId = Convert.ToInt32(temp[0]),
                     Name = temp[1],
                     FreeRooms = Convert.ToInt32(temp[2])
