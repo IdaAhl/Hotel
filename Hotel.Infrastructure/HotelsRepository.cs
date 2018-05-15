@@ -49,7 +49,6 @@ namespace Hotel.Infrastructure
             context.SaveChanges();
         }
 
-        
 
         public void ImportFile(List<Domain.Hotel> hotels)
         {
@@ -66,14 +65,5 @@ namespace Hotel.Infrastructure
             }
             context.SaveChanges();
         }
-
-       
-
-       
-
-
-       
-
-        
     }
 }
