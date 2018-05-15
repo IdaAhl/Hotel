@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using Hotel.Domain;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Hotel
+namespace Hotel.Infrastructure
 {
     public class HotelsRepository : IHotelsRepository
     {
@@ -51,7 +51,7 @@ namespace Hotel
 
         public void ImportScandicFile()
         {
-            var listOfHotels = new List<Hotel>();
+            var listOfHotels = new List<Domain.Hotel>();
             var text = File.ReadAllLines(GetLastFile("Scandic")).ToList();
             foreach (var t in text)
             {
@@ -59,7 +59,7 @@ namespace Hotel
 
                 if (!context.Hotel.Any(x => x.Name == temp[1] && x.AreaId == Convert.ToInt32(temp[0])))
                 {
-                    listOfHotels.Add(new Hotel()
+                    listOfHotels.Add(new Domain.Hotel()
                     {
                         AreaId = Convert.ToInt32(temp[0]),
                         Name = temp[1],
@@ -87,14 +87,14 @@ namespace Hotel
 
                 var array = JsonConvert.DeserializeObject<List<HotelBestWesternJson>>(json);
 
-                var listOfHotels = new List<Hotel>();
+                var listOfHotels = new List<Domain.Hotel>();
 
                 foreach (var hotel in array)
                 {
                     
-                    if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.Reg)) //  && x.AreaId == Convert.ToInt32(hotel["Reg"].ToString()
+                    if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.Reg))
                     { 
-                        listOfHotels.Add(new Hotel()
+                        listOfHotels.Add(new Domain.Hotel()
                         {
                             AreaId = hotel.Reg,
                             Name = hotel.Name,

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hotel.Domain;
+using Hotel.Infrastructure;
 using Microsoft.EntityFrameworkCore.Query.Expressions;
 
 namespace Hotel

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Hotel.Domain;
+using Hotel.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.Controllers
@@ -20,7 +22,7 @@ namespace Hotel.Controllers
         public IActionResult Seed()
         {
             _hotelsRepository.Seed();
-            return Ok("hej");
+            return Ok("Har tagit bort och lagt in ny databas");
         }
 
         [HttpPost]

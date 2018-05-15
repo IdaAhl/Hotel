@@ -1,16 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Hotel.Domain;
 using Microsoft.EntityFrameworkCore;
 
-namespace Hotel
+namespace Hotel.Infrastructure
 {
     public class DatabaseContext : DbContext
     {
 
         public DbSet<Area> Area { get; set; }
-        public DbSet<Hotel> Hotel { get; set; }
+        public DbSet<Domain.Hotel> Hotel { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

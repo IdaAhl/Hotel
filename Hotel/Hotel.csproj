@@ -21,4 +21,9 @@
     <None Include="wwwroot\Scandic-2018-03-20.txt" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Hotel.Domain\Hotel.Domain.csproj" />
+    <ProjectReference Include="..\Hotel.Infrastructure\Hotel.Infrastructure.csproj" />
+  </ItemGroup>
+
 </Project>
