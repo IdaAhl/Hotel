@@ -68,18 +68,15 @@ namespace Hotel.Infrastructure
             return listOfHotels;
         }
 
-        public void ImportScandicFile2(List<Domain.Hotel> hotels)
+        public void ImportFile(List<Domain.Hotel> hotels)
         {
             foreach (var hotel in hotels)
             {
                 if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.AreaId))
-                {
                     context.Hotel.Add(hotel);
-                }
                 else
                 {
                     var hotelFromDB = context.Hotel.First(x => x.Name == hotel.Name && x.AreaId == hotel.AreaId);
-
                     hotelFromDB.FreeRooms = hotel.FreeRooms;
                     context.Hotel.Update(hotel);
                 }
@@ -115,6 +112,28 @@ namespace Hotel.Infrastructure
             }
             context.Hotel.AddRange(listOfHotels);
             context.SaveChanges();
+        }
+
+        public List<Domain.Hotel> ParseBestWesternfile()
+        {
+            using (StreamReader r = new StreamReader(GetLastFile("BestWestern")))
+            {
+                string json = r.ReadToEnd();
+                var array = JsonConvert.DeserializeObject<List<HotelBestWesternJson>>(json);
+
+                var listOfHotels = new List<Domain.Hotel>();
+
+                foreach (var hotel in array)
+                {
+                    listOfHotels.Add(new Domain.Hotel()
+                    {
+                        AreaId = hotel.Reg,
+                        Name = hotel.Name,
+                        FreeRooms = hotel.LedigaRum
+                    });
+                }
+                return listOfHotels;
+            }
         }
 
         public void ImportBestWesternFile()
@@ -188,9 +207,9 @@ namespace Hotel.Infrastructure
                     latestFile = tempDate;
             }
 
-            if (hotelCompany=="Scandic")
+            if (hotelCompany == "Scandic")
                 return $"wwwroot/Scandic-{latestFile.ToString("yyyy-MM-dd")}.txt";
-            else 
+            else
                 return $"wwwroot/BestWestern-{latestFile.ToString("yyyy-MM-dd")}.json";
         }
     }

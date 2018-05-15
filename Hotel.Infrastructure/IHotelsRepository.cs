@@ -14,6 +14,7 @@ namespace Hotel.Infrastructure
         void ImportBestWesternFile();
 
         List<Domain.Hotel> ParseScandicfile();
-        void ImportScandicFile2(List<Domain.Hotel> hotels);
+        List<Domain.Hotel> ParseBestWesternfile();
+        void ImportFile(List<Domain.Hotel> hotels);
     }
 }

@@ -73,14 +73,15 @@ namespace Hotel.Controllers
         public IActionResult ImportScandicFile()
         {
             var list = _hotelsRepository.ParseScandicfile();
-            _hotelsRepository.ImportScandicFile2(list);
+            _hotelsRepository.ImportFile(list);
             return Ok("Filen är inläst");
         }
 
         [HttpPost, Route("ImportBestWesternFile")]
         public IActionResult ImportBestWesternFile()
         {
-            _hotelsRepository.ImportBestWesternFile();
+            var list =_hotelsRepository.ParseBestWesternfile();
+            _hotelsRepository.ImportFile(list);
             return Ok("Filen är inläst");
         }
     }
