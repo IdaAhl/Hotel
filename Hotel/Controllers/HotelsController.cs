@@ -72,7 +72,7 @@ namespace Hotel.Controllers
         [HttpPost, Route("ImportScandicFile")]
         public IActionResult ImportScandicFile()
         {
-            var list = _hotelsRepository.ParseScandicfile();
+            var list = new Parse().ParseScandicfile();
             _hotelsRepository.ImportFile(list);
             return Ok("Filen är inläst");
         }
@@ -80,7 +80,7 @@ namespace Hotel.Controllers
         [HttpPost, Route("ImportBestWesternFile")]
         public IActionResult ImportBestWesternFile()
         {
-            var list =_hotelsRepository.ParseBestWesternfile();
+            var list = new Parse().ParseBestWesternfile();
             _hotelsRepository.ImportFile(list);
             return Ok("Filen är inläst");
         }

@@ -1,4 +1,4 @@
-﻿namespace Hotel.Infrastructure
+﻿namespace Hotel.Domain
 {
     public class HotelBestWesternJson
     {

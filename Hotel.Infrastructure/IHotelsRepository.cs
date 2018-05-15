@@ -10,11 +10,7 @@ namespace Hotel.Infrastructure
         List<Area> GetAreas();
         void DeleteArea(int id);
         void UpdateArea(Area area);
-        void ImportScandicFile();
-        void ImportBestWesternFile();
-
-        List<Domain.Hotel> ParseScandicfile();
-        List<Domain.Hotel> ParseBestWesternfile();
+       
         void ImportFile(List<Domain.Hotel> hotels);
     }
 }
