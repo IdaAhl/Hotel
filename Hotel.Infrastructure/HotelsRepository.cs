@@ -17,9 +17,9 @@ namespace Hotel.Infrastructure
             context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            context.Area.Add(new Area {Name = "Göteborg Centrum", Id = 50});
-            context.Area.Add(new Area {Name = "Göteborg Hisingen", Id = 60});
-            context.Area.Add(new Area {Name = "Helsingborg", Id = 70});
+            context.Area.Add(new Area { Name = "Göteborg Centrum", Id = 50 });
+            context.Area.Add(new Area { Name = "Göteborg Hisingen", Id = 60 });
+            context.Area.Add(new Area { Name = "Helsingborg", Id = 70 });
 
             context.SaveChanges();
         }
@@ -46,6 +46,44 @@ namespace Hotel.Infrastructure
         public void UpdateArea(Area area)
         {
             context.Area.Update(area);
+            context.SaveChanges();
+        }
+
+        public List<Domain.Hotel> ParseScandicfile()
+        {
+            var listOfHotels = new List<Domain.Hotel>();
+            var text = File.ReadAllLines(GetLastFile("Scandic")).ToList();
+
+            foreach (var t in text)
+            {
+                var temp = t.Split(',');
+
+                listOfHotels.Add(new Domain.Hotel()
+                {
+                    AreaId = Convert.ToInt32(temp[0]),
+                    Name = temp[1],
+                    FreeRooms = Convert.ToInt32(temp[2])
+                });
+            }
+            return listOfHotels;
+        }
+
+        public void ImportScandicFile2(List<Domain.Hotel> hotels)
+        {
+            foreach (var hotel in hotels)
+            {
+                if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.AreaId))
+                {
+                    context.Hotel.Add(hotel);
+                }
+                else
+                {
+                    var hotelFromDB = context.Hotel.First(x => x.Name == hotel.Name && x.AreaId == hotel.AreaId);
+
+                    hotelFromDB.FreeRooms = hotel.FreeRooms;
+                    context.Hotel.Update(hotel);
+                }
+            }
             context.SaveChanges();
         }
 
@@ -91,9 +129,9 @@ namespace Hotel.Infrastructure
 
                 foreach (var hotel in array)
                 {
-                    
+
                     if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.Reg))
-                    { 
+                    {
                         listOfHotels.Add(new Domain.Hotel()
                         {
                             AreaId = hotel.Reg,
@@ -150,9 +188,9 @@ namespace Hotel.Infrastructure
                     latestFile = tempDate;
             }
 
-            if (hotelCompany=="Scandic")
+            if (hotelCompany == "Scandic")
                 return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
-            else 
+            else
                 return $"wwwroot/BestWestern-{latestFile.ToShortDateString()}.json";
         }
     }

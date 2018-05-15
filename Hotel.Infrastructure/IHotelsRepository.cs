@@ -12,5 +12,8 @@ namespace Hotel.Infrastructure
         void UpdateArea(Area area);
         void ImportScandicFile();
         void ImportBestWesternFile();
+
+        List<Domain.Hotel> ParseScandicfile();
+        void ImportScandicFile2(List<Domain.Hotel> hotels);
     }
 }

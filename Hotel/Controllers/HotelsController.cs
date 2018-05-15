@@ -72,7 +72,8 @@ namespace Hotel.Controllers
         [HttpPost, Route("ImportScandicFile")]
         public IActionResult ImportScandicFile()
         {
-            _hotelsRepository.ImportScandicFile();
+            var list = _hotelsRepository.ParseScandicfile();
+            _hotelsRepository.ImportScandicFile2(list);
             return Ok("Filen är inläst");
         }
 
