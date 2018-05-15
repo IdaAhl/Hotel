@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace Hotel
 {
@@ -50,7 +52,7 @@ namespace Hotel
         public void ImportScandicFile()
         {
             var listOfHotels = new List<Hotel>();
-            var text = File.ReadAllLines(GetLastScandicFile()).ToList();
+            var text = File.ReadAllLines(GetLastFile("Scandic")).ToList();
             foreach (var t in text)
             {
                 var temp = t.Split(',');
@@ -77,26 +79,81 @@ namespace Hotel
             context.SaveChanges();
         }
 
-        public string GetLastScandicFile()
+        public void ImportBestWesternFile()
+        {
+            using (StreamReader r = new StreamReader(GetLastFile("BestWestern")))
+            {
+                string json = r.ReadToEnd();
+
+                var array = JsonConvert.DeserializeObject<List<HotelBestWesternJson>>(json);
+
+                var listOfHotels = new List<Hotel>();
+
+                foreach (var hotel in array)
+                {
+                    
+                    if (!context.Hotel.Any(x => x.Name == hotel.Name && x.AreaId == hotel.Reg)) //  && x.AreaId == Convert.ToInt32(hotel["Reg"].ToString()
+                    { 
+                        listOfHotels.Add(new Hotel()
+                        {
+                            AreaId = hotel.Reg,
+                            Name = hotel.Name,
+                            FreeRooms = hotel.LedigaRum
+                        });
+                    }
+                    else
+                    {
+                        var hotelToUpdate = context.Hotel.First(x => x.Name == hotel.Name && x.AreaId == hotel.Reg);
+
+                        hotelToUpdate.FreeRooms = hotel.LedigaRum;
+                        context.Hotel.Update(hotelToUpdate);
+                    }
+                }
+
+                context.Hotel.AddRange(listOfHotels);
+                context.SaveChanges();
+            }
+        }
+
+        public List<string> GetFilePaths(string hotelCompany)
         {
             var files = Directory.GetFiles("wwwroot");
 
-            
-
-            DateTime latestFile = DateTime.MinValue;
+            var scandicList = new List<string>();
+            var bestWesternList = new List<string>();
 
             foreach (var file in files)
             {
-                string tempFile = file.Replace(".txt", "");
-                var tempFile2 = tempFile.Replace(@"wwwroot\Scandic-", "");
+                if (file.Contains("Scandic"))
+                    scandicList.Add(file);
+                if (file.Contains("BestWestern"))
+                    bestWesternList.Add(file);
+            }
 
-                var tempDate = DateTime.Parse(tempFile2);
+            if (hotelCompany == "Scandic")
+                return scandicList;
+            else //(hotel == "BestWestern")
+                return bestWesternList;
+        }
+
+        public string GetLastFile(string hotelCompany)
+        {
+            DateTime latestFile = DateTime.MinValue;
+
+            foreach (var file in GetFilePaths(hotelCompany))
+            {
+                string tempFile = Regex.Match(file, @"\d{4}-\d{2}-\d{2}").Value;
+
+                var tempDate = DateTime.Parse(tempFile);
 
                 if (tempDate > latestFile)
                     latestFile = tempDate;
             }
 
-            return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
+            if (hotelCompany=="Scandic")
+                return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
+            else 
+                return $"wwwroot/BestWestern-{latestFile.ToShortDateString()}.json";
         }
     }
 }

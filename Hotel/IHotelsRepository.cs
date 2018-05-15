@@ -13,5 +13,6 @@ namespace Hotel
         void DeleteArea(int id);
         void UpdateArea(Area area);
         void ImportScandicFile();
+        void ImportBestWesternFile();
     }
 }
