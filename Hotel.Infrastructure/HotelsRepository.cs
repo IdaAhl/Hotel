@@ -188,10 +188,17 @@ namespace Hotel.Infrastructure
                     latestFile = tempDate;
             }
 
+<<<<<<< HEAD
             if (hotelCompany == "Scandic")
                 return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
             else
                 return $"wwwroot/BestWestern-{latestFile.ToShortDateString()}.json";
+=======
+            if (hotelCompany=="Scandic")
+                return $"wwwroot/Scandic-{latestFile.ToString("yyyy-MM-dd")}.txt";
+            else 
+                return $"wwwroot/BestWestern-{latestFile.ToString("yyyy-MM-dd")}.json";
+>>>>>>> 9bc1cc8cc1ed53279bfec74a6242bd2f9c9dadfd
         }
     }
 }
