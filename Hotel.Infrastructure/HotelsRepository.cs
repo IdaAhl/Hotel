@@ -151,9 +151,9 @@ namespace Hotel.Infrastructure
             }
 
             if (hotelCompany=="Scandic")
-                return $"wwwroot/Scandic-{latestFile.ToShortDateString()}.txt";
+                return $"wwwroot/Scandic-{latestFile.ToString("yyyy-MM-dd")}.txt";
             else 
-                return $"wwwroot/BestWestern-{latestFile.ToShortDateString()}.json";
+                return $"wwwroot/BestWestern-{latestFile.ToString("yyyy-MM-dd")}.json";
         }
     }
 }
