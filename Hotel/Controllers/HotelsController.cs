@@ -9,14 +9,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace Hotel.Controllers
 {
     [Route("api/hotels")]
-    public class NewsController : Controller
+    public class HotelController : Controller
     {
         private IHotelsRepository _hotelsRepository;
 
-        public NewsController(IHotelsRepository hotelsRepository)
+        public HotelController(IHotelsRepository hotelsRepository)
         {
             _hotelsRepository = hotelsRepository;
         }
+
 
         [Route("seed"), HttpPost]
         public IActionResult Seed()
