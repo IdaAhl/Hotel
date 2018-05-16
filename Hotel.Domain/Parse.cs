@@ -10,6 +10,18 @@ namespace Hotel.Domain
 {
     public class Parse
     {
+        private readonly string _path;
+        
+        public Parse(string path)
+        {
+            _path = path;
+        }
+
+        public Parse()
+        {
+            _path = "wwwroot";
+        }
+
         public List<Domain.Hotel> ParseScandicfile()
         {
             var listOfHotels = new List<Domain.Hotel>();
@@ -53,7 +65,7 @@ namespace Hotel.Domain
 
         public List<string> GetFilePaths(string hotelCompany)
         {
-            var files = Directory.GetFiles("wwwroot");
+            var files = Directory.GetFiles(_path);
 
             var scandicList = new List<string>();
             var bestWesternList = new List<string>();
@@ -87,9 +99,9 @@ namespace Hotel.Domain
             }
 
             if (hotelCompany == "Scandic")
-                return $"wwwroot/Scandic-{latestFile.ToString("yyyy-MM-dd")}.txt";
+                return $"{_path}/Scandic-{latestFile.ToString("yyyy-MM-dd")}.txt";
             else
-                return $"wwwroot/BestWestern-{latestFile.ToString("yyyy-MM-dd")}.json";
+                return $"{_path}/BestWestern-{latestFile.ToString("yyyy-MM-dd")}.json";
         }
 
     }

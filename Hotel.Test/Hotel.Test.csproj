@@ -7,9 +7,32 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Import\BestWestern-2018-03-20.json" />
+    <None Remove="Import\BestWestern-2018-05-16.json" />
+    <None Remove="Import\Scandic-2018-03-20.txt" />
+    <None Remove="Import\Scandic-2018-03-23.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Import\BestWestern-2018-03-20.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Import\BestWestern-2018-05-16.json">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Import\Scandic-2018-03-20.txt">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+    <Content Include="Import\Scandic-2018-03-23.txt">
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
     <PackageReference Include="MSTest.TestAdapter" Version="1.2.0" />
     <PackageReference Include="MSTest.TestFramework" Version="1.2.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
   </ItemGroup>
 
   <ItemGroup>
