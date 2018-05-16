@@ -55,11 +55,38 @@ namespace Hotel.Controllers.Heartbeats
             }
         }
 
+        [HttpGet("testBestWesternFileYesterday")]
+        public IActionResult TestBestWesternFileYesterday()
+        {
+            if (System.IO.File.Exists($"wwwroot/BestWestern-{DateTime.Now.ToString("yyyy-MM-dd")}.json"))
+                return Ok("Filen finns");
+            else if (System.IO.File.Exists($"wwwroot/BestWestern-{DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")}.json") && DateTime.Now.Hour < 10)
+                return Ok("Gårdagens fil finns");
+            else
+            {
+                throw new Exception();
+            }
+        }
+
         [HttpGet("testScandicFile")]
         public IActionResult TestScandicFile()
         {
             if (System.IO.File.Exists($"wwwroot/Scandic-{DateTime.Now.ToString("yyyy-MM-dd")}.txt"))
                 return Ok("Filen finns");
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+
+        [HttpGet("testScandicFileYesterday")]
+        public IActionResult TestScandicFileYesterday()
+        {
+            if (System.IO.File.Exists($"wwwroot/Scandic-{DateTime.Now.ToString("yyyy-MM-dd")}.txt"))
+                return Ok("Filen finns");
+            else if (System.IO.File.Exists($"wwwroot/Scandic-{DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")}.txt") && DateTime.Now.Hour < 10)
+                return Ok("Gårdagens fil finns");
             else
             {
                 throw new Exception();
